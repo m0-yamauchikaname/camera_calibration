@@ -4,10 +4,10 @@ import os
 import glob
 
  # folder_name（ここを目的のフォルダに変更してください）
-folder_name = "0904"
+folder_name = "0313"
 
 # Defining the dimensions of checkerboard（対象のフォルダ）
-CHECKERBOARD = (6,9)
+CHECKERBOARD = (7,10)
 # cv2.TERM_CRITERIA_EPS:指定された精度(epsilon)に到達したら繰り返し計算を終了する
 # cv2.TERM_CRITERIA_MAX_ITER:指定された繰り返し回数(max_iter)に到達したら繰り返し計算を終了する
 # cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER : 上記のどちらかの条件が満たされた時に繰り返し計算を終了する
@@ -25,7 +25,14 @@ objp[0,:,:2] = np.mgrid[0:CHECKERBOARD[0], 0:CHECKERBOARD[1]].T.reshape(-1, 2)
 prev_img_shape = None
 
 # Extracting path of individual image stored in a given directory
-images = glob.glob(f'. /{folder_name}/*.jpg')
+script_dir = os.path.dirname(os.path.abspath(__file__))
+folder_path = os.path.join(script_dir, folder_name)
+if os.path.exists(folder_path):
+    print(f"Folder './{folder_name}' exists.")
+else:
+    print(f"Folder './{folder_name}' does not exist.")
+    exit()
+images = glob.glob(folder_path + '/*.jpg')
 for filepath in images:
     img = cv2.imread(filepath)
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -52,9 +59,10 @@ for filepath in images:
     # img_drawChessboardCornersフォルダにチェスボードのコーナー検出画像を保存
     os.makedirs('./img_drawChessboardCorners/', exist_ok=True)
     cv2.imwrite('./img_drawChessboardCorners/' + str(os.path.basename(filepath)), img)
-    cv2.waitKey(0)
+    #cv2.waitKey(0)
 
-cv2.destroyAllWindows()
+# cv2.destroyAllWindows() をコメントアウト
+# cv2.destroyAllWindows()
 
 h,w = img.shape[:2]
 
