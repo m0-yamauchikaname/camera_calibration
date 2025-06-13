@@ -4,7 +4,7 @@ import os
 import glob
 
  # folder_name（ここを目的のフォルダに変更してください）
-folder_name = "0313"
+folder_name = "img_0613"
 
 # Defining the dimensions of checkerboard（対象のフォルダ）
 CHECKERBOARD = (7,10)
